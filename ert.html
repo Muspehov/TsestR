@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #B6B3A4;
+        }
+
+        p {
+           text-transform: uppercase;
+        }
+
+        .block1 p {
+            color: #aeaeae;
+        }
+
+        .container {
+            width: 700px;
+            /*min-height: 500px;*/
+            outline: 1px solid red;
+            background: #111;
+
+        }
+
+        .block {
+            width: 200px;
+            height: 300px;
+            margin-left: 10px;
+        }
+
+        .block1 {
+            background: #222;
+            float: left;
+            outline: 1px solid blue;
+        }
+
+        .block2 {
+            background: #fbecdd;
+            height: 150px;
+            outline: 1px solid green;
+            float: left;
+
+        }
+
+        .block3 {
+            background: #d2a3d1;
+            float: left;
+            outline: 1px solid green;
+        }
+
+        .container:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+
+    </style>
+</head>
+<body>
+<div class="header"><p>Header</p></div>
+<div class="container">
+    <div class="block block1"><p>Block1</p></div>
+    <div class="block block2"><p>Block2</p></div>
+    <div class="block block3"><p>Block3  changed</p></div>
+
+</div>
+</body>
+</html>
