@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>TestJS</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background: #B6B3A4;
+        }
+
+        .conteiner{
+            /*height: auto;*/
+            width: 1000px;
+            margin: 30px 100px;
+            background: #5A67AF;
+        }
+        .innerBlock{
+            width: 750px;
+            min-height: 200px;
+            background: #fbecdd;
+            outline: auto;
+        }
+
+        textarea {
+            background: #fbecd9;
+            margin-top: 5px;
+            margin-left: 5px;
+        }
+
+        .div-input{
+            margin-right: 30px;
+            margin-left: 10px;
+            outline: 2px red;
+        }
+
+        .div-connect::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .div-txtarea{
+            width: 350px;
+            float: left;
+        }
+
+        .div-result{
+            width: 400px;
+            min-height: 100px;
+            outline: 1px solid red;
+            float: right;
+        }
+
+    </style>
+    <script>
+        function get5RandAndAddInValue(id, min, max) { //кратное 5
+            var rand = Math.floor(Math.random() * (max - min + 1)) + min;
+            var element = document.getElementById(id);
+            var p = document.createElement("p"),
+                    content = document.createTextNode(result);
+        }
+
+        function inputText(idTextarea, idTarget){
+            var element = document.getElementById(idTextarea),
+                    target = document.getElementById(idTarget);
+            var x = element.value.replace(/\./, ',');
+            var p = document.createElement("p"),
+                    content = document.createTextNode(x);
+            p.appendChild(content);
+            target.innerHTML = '';
+            target.appendChild(p);
+
+        }
+
+        function outputStringLength(idTextarea, idTarget){
+            var element = document.getElementById(idTextarea),
+                    target = document.getElementById(idTarget);
+            var string = 'Result: ' +  element.value.length;
+            var p = document.createElement("p"),
+                    content = document.createTextNode(string);
+            p.appendChild(content);
+            target.innerHTML = '';
+            target.appendChild(p);
+        }
+
+        function sumTwoTime(strMain, strSummand){
+            var array = [strMain, strSummand];
+            for (var i = 0; i < array.length; i++){ //transform in minutes
+                var hours = array[i].substr(0, array[i].length - 2) * 60;
+                array[i] = hours + parseInt(array[i].substr(-2));
+            }
+
+            array[0] += array[1];
+
+            var resultHours = array[0] / 60 ^ 0;
+            var resultMinutes = array[0]  % 60;
+
+            if (resultHours < 10) resultHours = '0' + String(resultHours);
+            else resultHours = String(resultHours);
+
+            if (resultMinutes < 10) resultMinutes = '0' + String(resultMinutes);
+            else resultMinutes = String(resultMinutes);
+
+            array[0] = resultHours + resultMinutes; //result of connection
+
+            return array[0];
+        }
+
+        function formatTimeCorrection(array){
+            var regTime = /\d{4}/g;
+            for (var i = 0, time = 0, hours = 0, minutes = 0; i < array.length; i++) {
+                time = array[i].match(regTime);
+                hours = time[0].substr(0,2);
+                minutes = time[0].substr(2,3);
+                array[i] = array[i].replace(regTime, hours + ':' + minutes);
+            }
+            return array;
+        }
+
+        function outputArrayInBlock(idTextarea, idTarget){
+            var element = document.getElementById(idTextarea),
+                    target = document.getElementById(idTarget);
+            target.innerHTML = '';
+
+            var string = element.value;
+            var regAllNeedArrString = /([A-Z]\S+\s+\d{4})|([A-Z]\S+\s+\S+\s+\d{4})/g;
+            var regIdentifier = /^\S+\s/g;
+            var regTime = /\d{4}/g;
+            var array = string.match(regAllNeedArrString);
+            var resultArr = [];
+            if (array === null) return null; // if not match
+
+            nextInput:
+                    for (var k = 0; k < array.length; k++) {
+                        for (var j = 0; j < resultArr.length; j++) {
+                            var match1 = array[k].match(regIdentifier);
+                            var match2 = resultArr[j].match(regIdentifier);
+                            var regTimeMatch1 = resultArr[j].match(regTime);
+                            var regTimeMatch2 = array[k].match(regTime);
+
+                            if (match1[0] == match2[0]) {
+                                var sumTime = sumTwoTime(regTimeMatch1[0], regTimeMatch2[0]);
+
+
+                                for (var e = resultArr.length - 1; e >= 0; e--){
+                                    var matchE = resultArr[e].match(regIdentifier);
+                                    if (match1[0] == matchE[0])
+                                        resultArr[e] = resultArr[e].replace(regTime, sumTime);
+                                }
+
+                                continue nextInput;
+                            }
+                        }
+                        resultArr.push(array[k]);
+                    }
+
+            resultArr = formatTimeCorrection(resultArr);
+
+            for (var i = 0; i < resultArr.length; i++){
+                var p = document.createElement("p"),
+                        content = document.createTextNode(resultArr[i]);
+                p.appendChild(content);
+                target.appendChild(p);
+            }
+        }
+        //////////////////////////////////
+        function outputObjectConsole(obj) {
+            for(var prop in obj){
+                if (!obj.hasOwnProperty(prop)) continue;
+                console.log(prop + ': ' + obj[prop]);
+            }
+        }
+
+
+    </script>
+
+</head>
+<body>
+<div class="conteiner">
+    <div class="innerBlock">
+        <div class="div-connect">
+            <div class="div-txtarea"><textarea cols="40" id="txtarea" name="clotheds" rows="10" onkeyup=""></textarea></div>
+            <div class="div-result" id="divResult">divResult</div>
+        </div>
+
+        <div class="div-input" id="divInput"></div>
+
+    </div>
+    <div class="inputBlock"><input onclick="outputArrayInBlock('txtarea', 'divResult')"type="button" value="Результат"></div>
+
+</div>
+
+</body>
+</html>

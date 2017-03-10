@@ -1,0 +1,94 @@
+*{
+    margin: 0;
+    /*padding: 0;*/
+}
+ul{
+    list-style: none;
+}
+
+a{
+    text-decoration: none;
+}
+
+body{
+    background: url(img/bg-body.png) no-repeat 50% 0 #0e0e0e;
+    font: 12px/1.67 Arial, Helvetica, sans-serif;
+    padding: 40px 0;
+}
+
+.wrapper{
+    width: 960px;
+    margin: 0 auto;
+}
+
+/*HEADER BEGIN*/
+.header{
+    background: #fff;
+    height: 97px;
+    -o-border-radius: 7px 7px 0 0;
+    -moz-border-radius: 7px 7px 0 0;
+    -webkit-border-radius:  7px 7px 0 0;
+}
+.header h1{
+    float: left;
+    margin: 30px 0 0 40px;
+}
+
+.tel{
+    background: url(img/bg-tel.png) repeat-x 0 0;
+    padding: 3px 27px 3px 90px;
+    font-size: 18px;
+    font-weight: bold;
+    color: #c0c0c0;
+    float: right;
+}
+nav{
+    float: right;
+    clear: right;
+}
+
+nav li{
+    float: right;
+    margin: 20px 30px 0 5px;
+
+}
+
+nav li a{
+    color: #808080;
+    text-transform: uppercase;
+    font-weight: bold;
+    padding: 3px 5px;
+}
+
+nav li a:hover{
+    background: url(img/bg-li-curent.gif) repeat-x 0 0;
+    color: #fff;
+    -o-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+#current {
+    padding: 3px 15px;
+    background: url(img/bg-li-curent.gif) repeat-x 0 0;
+    color: #fff;
+    -o-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -webkit-border-radius: 4px;
+}
+
+/*HEADER END */
+
+table{
+    color: darkslategrey;
+    background: #333;
+    border: 2px solid red;
+}
+
+.space{
+    width: 300px;
+    padding: 10px;
+    background: #B6B3A4;
+    border: 4px solid #dff;
+    margin: 7px;
+}

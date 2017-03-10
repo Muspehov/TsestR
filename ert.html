@@ -8,68 +8,64 @@
             margin: 0;
             padding: 0;
         }
+
         body {
-            background: #B6B3A4;
+            background: #615e51;
         }
 
-        p {
-           text-transform: uppercase;
+        .main {
+            width: 1000px;
+            margin: auto;
         }
 
-        .block1 p {
-            color: #aeaeae;
+        .header {
+            height: 50px;
+            background: #343;
         }
 
         .container {
-            width: 700px;
-            /*min-height: 500px;*/
-            outline: 1px solid red;
-            background: #111;
-
+            min-height: 400px;
+            min-width: 800px;
+            background: #aeaeae;
         }
 
-        .block {
-            width: 200px;
-            height: 300px;
-            margin-left: 10px;
-        }
-
-        .block1 {
-            background: #222;
-            float: left;
-            outline: 1px solid blue;
-        }
-
-        .block2 {
-            background: #fbecdd;
-            height: 150px;
-            outline: 1px solid green;
-            float: left;
-
-        }
-
-        .block3 {
-            background: #d2a3d1;
-            float: left;
-            outline: 1px solid green;
-        }
-
-        .container:after {
-            content: "";
-            display: table;
-            clear: both;
-        }
 
 
     </style>
+
+    <script type="text/javascript">
+        function changeArray (array) {
+            array[0] = 9;
+        }
+
+        var arr = [1,3,4];
+
+        console.log(arr[0]);
+        changeArray(arr);
+        console.log(arr[0]);
+
+
+    </script>
 </head>
 <body>
-<div class="header"><p>Header</p></div>
-<div class="container">
-    <div class="block block1"><p>Block1</p></div>
-    <div class="block block2"><p>Block2</p></div>
-    <div class="block block3"><p>Block3  changed</p></div>
+<div class="main">
+    <div class="header"></div>
+    <div class="container" id="container">
+
+        <input onclick="" type="button" value="проверка">
+        <input onclick="" type="button" value="Результат &#8240">
+
+        <div class="result" id="spotItem"></div>
+        <div class="result" id="output"></div>
+    </div>
 
 </div>
+<script>
+
+
+</script>
+
+<button onclick="">Insert new button!</button>
+
 </body>
 </html>

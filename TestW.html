@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta>
+    <title>Test</title>
+    <meta http-equiv="content-type" content="text/html" charset="utf-8"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            background: #c0c0c0;
+        }
+
+        .container {
+            outline: 1px solid darkgreen;
+            width: 500px;
+            margin: 50px auto;
+        }
+
+        .outline {
+            border: 3px solid black;
+            padding: 20px;
+            margin-bottom: 20px;
+            background: rgba(225, 225, 0, 0.2);
+        }
+
+        .column1, .column2, .column3 {
+            min-height: 100px;
+        }
+
+        .column1 {
+            float: left;
+            width: 194px;
+        }
+
+        .column2 {
+            float: right;
+            width: 194px;
+        }
+
+        .column3 {
+            clear: both;
+            width: 194px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hystology-reproductive-woman {
+            display: none;
+        }
+
+
+
+
+
+    </style>
+    <script>
+        function changeStyleDisplay(id, display){
+            var element = document.getElementById(id);
+            element.style.display = display;
+        }
+
+        function changeCheckedFalse(id) {
+            var element = document.getElementById(id);
+            if (element.checked) element.checked = false;
+        }
+
+    </script>
+</head>
+<body>
+<div class="container">
+    <div class="header outline">header</div>
+    <div class="column1 outline">
+        <span>Пол</span><br>
+        <input id="man" name="sex" type="radio" autocomplete="off" checked="checked" onchange="
+                changeCheckedFalse('hystUterus');
+                changeCheckedFalse('hystOvary');
+                changeStyleDisplay('hystologyUterus', 'none');
+                changeStyleDisplay('hystologyOvary', 'none');
+                changeStyleDisplay('hystologyProstata', 'block');
+                changeStyleDisplay('hystologyTesticles', 'block');
+
+                "><label for="man"><span>Мужской</span></label><br/>
+        <input id="woman" name="sex" type="radio" autocomplete="off" onchange="
+
+            changeCheckedFalse('hystProstata');
+            changeCheckedFalse('hystTesticles');
+            changeStyleDisplay('hystologyUterus', 'block');
+            changeStyleDisplay('hystologyOvary', 'block');
+            changeStyleDisplay('hystologyProstata', 'none');
+            changeStyleDisplay('hystologyTesticles', 'none');
+
+
+
+                "><label for="woman"><span>Женский</span></label><br/>
+
+    </div>
+    <div class="column2 outline">
+        <div id="hystologyUterus" class="hystology-reproductive-woman"><label><input type="checkbox" autocomplete="off" id="hystUterus"> <span>Матка</span></label></div>
+        <div id="hystologyOvary" class="hystology-reproductive-woman"><label><input type="checkbox" autocomplete="off" id="hystOvary"> <span>Яичники</span></label></div>
+        <div id="hystologyProstata"><label><input type="checkbox" autocomplete="off" id="hystProstata"> <span>Простата</span></label></div>
+        <div id="hystologyTesticles"><label><input type="checkbox" autocomplete="off" id="hystTesticles"><span>Яички</span></label></div><br/>
+
+    </div>
+    <div class="column3 outline">column3</div>
+    <div class="footer outline">footer</div>
+</div>
+
+</body>
+</html>

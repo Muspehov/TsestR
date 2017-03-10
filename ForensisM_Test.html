@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ForensisMTest</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        outline: 0; /*удаляем обводочку*/
+    }
+
+    body {
+        background: #B6B3A4;
+        font: 14px Arial, Tahoma, sans-serif;
+        color: #d3d3d3;
+    }
+
+    .container    {
+        width: 900px;
+        min-height: 300px;
+        margin: 48px auto;
+        outline: auto;
+    }
+
+    .header {
+        background: #586639;
+        width: 900px;
+        min-height: 50px;
+    }
+
+    .content {
+        background: #66655E;
+        min-height: 250px;
+        border: 15px;
+    }
+
+    .test-container {
+        margin-left: 80px;
+        min-width: 100px;
+        min-height: 250px;
+    }
+
+    .target li {
+        margin-left: 30px;
+        margin-top: 5px;
+        list-style-type: decimal;
+
+    }
+
+    .target li:hover {
+        cursor: pointer;
+        color: #adaf54;
+        -webkit-transition-duration: 0.3s;
+        -moz-transition-duration: 0.3s;
+        -o-transition-duration: 0.3s;
+        transition-duration: 0.3s;
+
+    }
+
+    .target input[type=button] {
+        cursor: pointer;
+    }
+    .target input[type=text] {
+        width: 30px;
+    }
+
+    /*added by function*/
+    .p-qwestion {
+        margin-top: 10px;
+    }
+
+    .p-answer {
+        margin-top: 10px;
+    }
+
+
+</style>
+<script>
+    var testArr_0 = [[['Answer_1? Correct answer #3'], [['Answer1'], ['Answer2'], ['Answer3']], [3]],
+        [['Answer_2? Correct answer #2 dadasddadasd dadadasdsd sdasddasad dsaasd ssad sd as. ,   '], [['Answer1dadasddadasd dadadasdsd sdasddasad dsaasd ssad sd as.'], ['Answer2 dadasddadasd dadadasdsd sdasddasad dsaasd ssad sd as.'], ['Answer3dadasddadasd dadadasdsd sdasddasad dsaasd ssad sd as.'], ['Answer4'], ['Answer5']], [2]],
+        [['Answer_3? Correct answer #1'], [['Answer1'], ['Answer2'], ['Answer3'], ['Answer4']], [1]]
+    ];
+
+    var testArr = shuffleFisherYates(testArr_0);
+    var counter = 0;
+    var correctAnswerCounter = 0;
+    var firstType = false; //первый ввод ответа, исключение повторных
+
+
+    function testLoad(testArray, idOutput, idControlButton) {
+        var controlButton = document.getElementById(idControlButton);
+        controlButton.value = 'Далее >>>';
+        var output = document.getElementById(idOutput);
+        var docket = document.createElement('span');
+        var txt = document.createTextNode('Выбрано: ');
+        docket.appendChild(txt);
+        var br = document.createElement('br');
+
+        var inputText = document.createElement('input');
+        inputText.setAttribute('type', 'text');
+        inputText.setAttribute('id', 'input');
+        var inputButton = document.createElement('input');
+        inputButton.setAttribute('type', 'button');
+        inputButton.setAttribute('id', 'button');
+        inputButton.setAttribute('value', 'Подтвердить ответ');
+        firstType = false; //первый ввод ответа, исключение повторных
+
+        inputButton.addEventListener('click', function () {
+            checkTestAnswer(testArray, 'input', 'answerNotation'); //запуск ф. проверки
+        });
+
+        if (counter < testArray.length) {
+            var p = document.createElement('p');
+            p.classList.add('p-qwestion');
+            txt = document.createTextNode(testArray[counter][0][0]); //text of question
+            p.appendChild(txt);
+
+            var ul = document.createElement('ul');
+            for (var i = 0; i < testArray[counter][1].length; i++) {
+                var li = document.createElement('li');
+                li.addEventListener('click', function () {
+                    getElementIndex(this, 'input')
+                });
+                txt = document.createTextNode(testArray[counter][1][i]); //text of answer
+                li.appendChild(txt);
+                ul.appendChild(li);
+
+            }
+
+            output.appendChild(p);
+            output.appendChild(br);
+            output.appendChild(ul);
+            output.appendChild(br);
+            output.appendChild(docket);
+            output.appendChild(inputText);
+            output.appendChild(inputButton);
+            counter++;
+
+        } else {
+            p = document.createElement('p');
+            p.classList.add('p-qwestion');
+            var pStat = document.createElement('p');
+            txt = document.createTextNode('Результат:');
+            p.appendChild(txt);
+            var procentStatistic = Math.round(correctAnswerCounter * 100 / testArray.length);
+            var statistic = document.createTextNode('Из ' + testArray.length + ' вопросов, правильно отвечено на '
+                    + correctAnswerCounter + ' (' + procentStatistic + '%) ');
+
+            output.appendChild(br);
+            pStat.appendChild(statistic);
+            output.appendChild(br);
+            output.appendChild(br);
+            output.appendChild(br);
+            output.appendChild(p);
+            output.appendChild(br);
+            output.appendChild(pStat);
+            testArr = shuffleFisherYates(testArr_0); //перемешивание массива, устранение поворения последовательности
+            controlButton.value = 'Ещё раз пройти тест';
+            counter = 0; correctAnswerCounter = 0;
+        }
+    }
+
+    function checkTestAnswer(testArray, idInput, idNotation) { //ф. проверки
+        var input = document.getElementById(idInput),
+                output = document.getElementById(idNotation);
+        if (!firstType) {
+            if (testArray[counter - 1][2][0] == input.value) {
+                var p = document.createElement('p');
+                var txt = document.createTextNode('Ответ верный'); //text of question
+                p.appendChild(txt);
+                p.classList.add('p-answer');
+                output.appendChild(p);
+                firstType = true;
+                correctAnswerCounter++;
+            } else {
+                p = document.createElement('p');
+                txt = document.createTextNode('Неверно. Правильный ответ: ' + testArray[counter - 1][2][0]); //text of question
+                p.appendChild(txt);
+                p.classList.add('p-answer');
+                output.appendChild(p);
+                firstType = true;
+            }
+        }
+    }
+
+    function resetContainer(idContainer) {
+        for (var i = 0; i < arguments.length; i++) {
+            document.getElementById(arguments[i]).innerHTML = '';
+        }
+    }
+
+
+
+
+    function getElementIndex(node, idTarget) {
+        var target = document.getElementById(idTarget);
+        var index = 0;
+        while ((node = node.previousSibling)) {
+            if (node.nodeType == 1) {
+                index++;
+            }
+        }
+        target.value = index + 1;
+    }
+
+    function shuffleFisherYates(array) {
+        var counter = array.length, temp, index;
+
+        // While there are elements in the array
+        while (counter > 0) {
+            // Pick a random index
+            index = Math.floor(Math.random() * counter);
+
+            // Decrease counter by 1
+            counter--;
+
+            // And swap the last element with it
+            temp = array[counter];
+            array[counter] = array[index];
+            array[index] = temp;
+        }
+
+        return array;
+    }
+
+</script>
+
+</head>
+<body>
+<div class="container">
+    <div class="header">тесты по судебной медицине</div>
+    <div class="content">
+        <div class="test-container">
+        <input type="button" id="testControlButton"
+               onclick="resetContainer('target', 'answerNotation'); testLoad(testArr, 'target', 'testControlButton')" value="Начать тест">
+        <!--<input type="button" id="reset" onclick="resetContainer('target')" value="Reset">-->
+        <!--<input type="button" onclick="counter = 0; correctAnswerCounter = 0" value="ResetTest">-->
+
+        <div class="target" id="target"></div>
+        <div class="target" id="answerNotation"></div>
+        </div>
+
+    </div>
+</div>
+</body>
+</html>
